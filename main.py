@@ -44,7 +44,7 @@ filename=input('Enter filename:')
 filename=filename + '.pdf'
 text= convert_pdf_to_txt(filename)
 data=[]
-n=120
+n=1000
 pattern= "[^\x20-\x7E]+"
 for i in range(0, len(text), n):
     data.append("".join(text[i:i+n]))
@@ -65,11 +65,10 @@ trns_text=driver.find_elements_by_tag_name('textarea')
 
 #convert pdf data
 document = Document()
-
 for d in data:
 	d=re.sub(pattern, '', d)
 	trns_text[0].send_keys(d)
-	time.sleep(20)
+	time.sleep(15)
 	cpy_btn=driver.find_elements_by_tag_name('svg')
 	cpy_btn[1].click()
 	translated_data = pyperclip.paste()
@@ -77,9 +76,8 @@ for d in data:
 	document.add_paragraph(translated_data)
 	trns_text[0].clear()
 
-
 document.save('Japanese.docx')
-driver.close
+driver.close()
 
 
 
